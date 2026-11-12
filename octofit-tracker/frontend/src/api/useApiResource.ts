@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { getJson } from './client.js';
 
 type ResourceState<T> = {
   data: T | null;
@@ -7,13 +6,13 @@ type ResourceState<T> = {
   error: string | null;
 };
 
-export function useApiResource<T>(path: string) {
+export function useApiResource<T>(path: string, load: (path: string) => Promise<T>) {
   const [state, setState] = useState<ResourceState<T>>({ data: null, loading: true, error: null });
 
   useEffect(() => {
     let active = true;
     setState({ data: null, loading: true, error: null });
-    getJson<T>(path).then(
+    load(path).then(
       (data) => {
         if (active) setState({ data, loading: false, error: null });
       },
@@ -27,7 +26,7 @@ export function useApiResource<T>(path: string) {
       },
     );
     return () => { active = false; };
-  }, [path]);
+  }, [path, load]);
 
   return state;
 }
