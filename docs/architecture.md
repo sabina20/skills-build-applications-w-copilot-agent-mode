@@ -17,6 +17,10 @@ OctoFit Tracker is a three-tier application for a school fitness program. The st
 - Vite frontend: `5173`
 - The browser calls relative `/api` paths. Vite proxies them to `http://localhost:8000`, so the unauthenticated API port stays private in Codespaces. `VITE_API_BASE_URL` can override the base URL.
 
+## Demo data
+
+Load or refresh the representative records with `npm run seed --prefix octofit-tracker/backend`. The seed uses upserts and can be rerun without clearing unrelated MongoDB records.
+
 ## API contract
 
 | Capability | Method and path | Expected behavior |
